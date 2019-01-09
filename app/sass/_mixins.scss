@@ -1,0 +1,64 @@
+//fonts style
+
+@mixin font($color: white, $size: 1rem, $weight: normal, $decor: none) {
+  font-family: helvetica, serif;
+  font-size: $size;
+  color: $color;
+  font-weight: $weight;
+  text-decoration: $decor;
+};
+
+// indents
+
+@mixin indents($pt:0, $pr:0, $pb:0, $pl:0,
+$mt:0, $mr:0, $mb:0, $ml:0) {
+  padding-top: $pt;
+  padding-left: $pl;
+  padding-bottom: $pb;
+  padding-right: $pr;
+  margin-top: $mt;
+  margin-left: $ml;
+  margin-bottom: $mb;
+  margin-right: $mr;
+}
+
+//adaptive mixin
+
+@mixin adaptive($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint){
+
+    @if ($breakpoint==extraLarge){
+      @media(min-width: map-get($breakpoints, $breakpoint)){
+        @content;
+      }
+    }
+
+    @else if ($breakpoint==large) {
+      @media (min-width: map-get($breakpoints, $breakpoint)) and (max-width: 1199px){
+        @content;
+      }
+    }
+
+    @else if ($breakpoint == medium) {
+      @media (min-width: map-get($breakpoints, $breakpoint)) and (max-width:991px){
+        @content;
+      }
+    }
+
+    @else if ($breakpoint == small) {
+      @media (min-width: map-get($breakpoints, $breakpoint)) and (max-width: 767px ){
+        @content;
+      }
+    }
+
+    @else if ($breakpoint == extraSmall) {
+      @media (max-width: map-get($breakpoints, $breakpoint)) {
+        @content;
+      }
+    }
+
+    @else {
+      @warn ("Error, enter your breakpoint in map");
+    }
+  }
+}
